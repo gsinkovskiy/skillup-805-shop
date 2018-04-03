@@ -32,6 +32,14 @@ class Product
      */
     private $description;
 
+    /**
+     * @var Category
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="products")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $category;
+
     public function getId()
     {
         return $this->id;
@@ -77,6 +85,18 @@ class Product
     public function setDescription($description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
