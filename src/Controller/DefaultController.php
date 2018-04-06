@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Service\Products;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -11,15 +13,10 @@ class DefaultController extends Controller
     /**
      * @Route("/", name="homepage")
      */
-    public function index(SessionInterface $session)
+    public function index(Products $products)
     {
-        $counter = $session->get('page_counter', 0);
-        $counter++;
-        $session->set('page_counter', $counter);
-
         return $this->render('default/index.html.twig', [
-            'controller_name' => 'DefaultController123',
-            'counter' => $counter,
+            'topProducts' => $products->getTopProducts(),
         ]);
     }
 
@@ -37,6 +34,14 @@ class DefaultController extends Controller
         }
 
         return $this->render('default/show.html.twig', ['id' => $id]);
+    }
+
+    /**
+     * @Route("/admin")
+     */
+    public function admin()
+    {
+        return new Response('<html><body>Admin page!</body></html>');
     }
 
 }

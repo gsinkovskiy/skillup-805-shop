@@ -40,6 +40,18 @@ class Product
      */
     private $category;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", options={"default": false})
+     */
+    private $isTop;
+
+    public function __construct()
+    {
+        $this->isTop = false;
+    }
+
     public function getId()
     {
         return $this->id;
@@ -97,6 +109,18 @@ class Product
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function isTop(): bool
+    {
+        return $this->isTop;
+    }
+
+    public function setIsTop(bool $isTop): self
+    {
+        $this->isTop = $isTop;
 
         return $this;
     }
