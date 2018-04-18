@@ -1,0 +1,4 @@
+security:
+    password:
+        reset:
+            link: Забули пароль?
