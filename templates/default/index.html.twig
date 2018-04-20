@@ -8,7 +8,13 @@
     <div class="card-deck product">
         {% for product in topProducts %}
             <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="//placehold.it/300x200" alt="{{ product.title }}">
+                <img class="card-img-top"
+                     src="{%- if product.imageName -%}
+                            {{ vich_uploader_asset(product, 'imageFile') | imagine_filter('squared_product_thumbnail') }}
+                        {%- else -%}
+                            //placehold.it/300x300
+                        {%- endif -%}"
+                     alt="{{ product.title }}">
                 <div class="card-body">
                     <h5 class="card-title">
                         <a href="{{ path('product_show', {id: product.id}) }}">

@@ -21,3 +21,6 @@
 ###< symfony/web-server-bundle ###
 
 /.idea/
+
+/public/media/cache/
+/public/images/products/
