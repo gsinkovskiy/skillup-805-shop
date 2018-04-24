@@ -1,0 +1,7 @@
+{% extends '@SonataAdmin/CRUD/base_list_field.html.twig' %}
+
+{% block field %}
+    <div style="padding-left: {{ object.level * 2 }}em">
+        {{ parent() }}
+    </div>
+{% endblock %}
