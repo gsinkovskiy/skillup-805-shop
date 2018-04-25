@@ -1,3 +1,31 @@
 main {
     margin-top: 56px;
 }
+
+.second .dropdown-item {
+    position: relative;
+}
+
+.second .dropdown-item:hover .dropdown-menu {
+    display: block;
+}
+
+.second .dropdown-item > a {
+    color: black;
+}
+
+.second .dropdown-item > a:hover {
+    text-decoration: none;
+}
+
+.second .dropdown-item .dropdown-item {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (min-width: 768px) {
+    .navbar-expand-md .navbar-nav .second .dropdown-menu-right {
+        left: 100%;
+        top: -11px;
+    }
+}

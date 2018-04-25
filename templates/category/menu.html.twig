@@ -1,0 +1,29 @@
+{% for item in tree %}
+    <a class="nav-link dropdown-toggle" id="menu-catalog-{{ item.id }}"
+       href="{{ path('category_show', {id: item.id}) }}"
+       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ item.name }}</a>
+
+    {% if item.__children %}
+        <ul class="dropdown-menu second" aria-labelledby="menu-catalog-{{ item.id }}">
+            {% for subitem in item.__children %}
+                <li class="dropdown-item">
+                    <a href="{{ path('category_show', {id: subitem.id}) }}">{{ subitem.name }}</a>
+
+                    {% if subitem.__children %}
+                        <div class="dropdown-menu dropdown-menu-right">
+                            {% for subsubitem in subitem.__children %}
+                                <a class="dropdown-item" title="{{ subsubitem.name }}"
+                                   href="{{ path('category_show', {id: subsubitem.id}) }}">
+                                    {{ subsubitem.name }}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item"
+               href="{{ path('category_show', {id: item.id}) }}">Все категории</a>
+        </ul>
+    {% endif %}
+{% endfor %}
