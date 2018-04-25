@@ -11,6 +11,7 @@ use Gedmo\Tree\Traits\NestedSetEntity;
 /**
  * @Gedmo\Tree(type="nested")
  * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
+ * @ORM\Table(name="categories")
  */
 class Category
 {

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
@@ -87,9 +89,17 @@ class Product
      */
     private $updatedAt;
 
+    /**
+     * @var OrderItem[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="product")
+     */
+    private $orderItems;
+
     public function __construct()
     {
         $this->isTop = false;
+        $this->orderItems = new ArrayCollection();
     }
 
     public function getId()
@@ -252,6 +262,42 @@ class Product
     public function setUpdatedAt(\DateTime $updatedAt): Product
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getIsTop(): ?bool
+    {
+        return $this->isTop;
+    }
+
+    /**
+     * @return Collection|OrderItem[]
+     */
+    public function getOrderItems(): Collection
+    {
+        return $this->orderItems;
+    }
+
+    public function addOrderItem(OrderItem $orderItem): self
+    {
+        if (!$this->orderItems->contains($orderItem)) {
+            $this->orderItems[] = $orderItem;
+            $orderItem->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderItem(OrderItem $orderItem): self
+    {
+        if ($this->orderItems->contains($orderItem)) {
+            $this->orderItems->removeElement($orderItem);
+            // set the owning side to null (unless already changed)
+            if ($orderItem->getProduct() === $this) {
+                $orderItem->setProduct(null);
+            }
+        }
 
         return $this;
     }
