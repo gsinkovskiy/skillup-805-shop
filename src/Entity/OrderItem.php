@@ -77,6 +77,7 @@ class OrderItem
     public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
+        $this->updateAmount();
 
         return $this;
     }
@@ -89,6 +90,7 @@ class OrderItem
     public function setPrice($price): self
     {
         $this->price = $price;
+        $this->updateAmount();
 
         return $this;
     }
@@ -96,13 +98,6 @@ class OrderItem
     public function getAmount()
     {
         return $this->amount;
-    }
-
-    public function setAmount($amount): self
-    {
-        $this->amount = $amount;
-
-        return $this;
     }
 
     public function getOrder(): ?Order
@@ -125,8 +120,18 @@ class OrderItem
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
+        $this->setPrice($product->getPrice());
 
         return $this;
+    }
+
+    private function updateAmount()
+    {
+        $this->amount = round($this->price * $this->quantity, 2);
+
+        if ($this->order) {
+            $this->order->updateAmount();
+        }
     }
 
 }
