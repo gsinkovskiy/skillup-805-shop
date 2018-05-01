@@ -1,0 +1,8 @@
+<a href="{{ path('order_cart') }}">
+    <i class="fas fa-shopping-cart"></i>
+
+    {%- if cart.productsCount > 0 -%}
+        <span class="badge badge-light">{{ cart.productsCount }}</span>
+        {{ cart.amount }}
+    {%- endif -%}
+</a>

@@ -29,3 +29,16 @@ main {
         top: -11px;
     }
 }
+
+.navbar .cart {
+    margin-left: 1em;
+}
+
+.navbar .cart .fa-shopping-cart {
+    font-size: 159%;
+    line-height: 0.6em;
+}
+
+.navbar .cart .badge {
+    margin-left: -0.5em;
+}

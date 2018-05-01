@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Entity\Product;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -33,7 +34,7 @@ class Orders
         return $this->session->has(self::CART_ID);
     }
 
-    public function getCart(): Order
+    public function getCart(User $user = null): Order
     {
         $order = null;
         $orderId = $this->session->get(self::CART_ID);
@@ -45,17 +46,21 @@ class Orders
         if ($order === null) {
             $order = new Order();
             $this->em->persist($order);
-            $this->em->flush();
         }
 
+        if ($user) {
+            $order->setUser($user);
+        }
+
+        $this->em->flush();
         $this->session->set(self::CART_ID, $order->getId());
 
         return $order;
     }
 
-    public function addToCart(Product $product, $quantity): Order
+    public function addToCart(Product $product, $quantity, User $user = null): Order
     {
-        $order = $this->getCart();
+        $order = $this->getCart($user);
         $orderItem = null;
 
         foreach ($order->getItems() as $item) {
