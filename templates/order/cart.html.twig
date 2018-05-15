@@ -4,7 +4,7 @@
     <h1>Корзина</h1>
 
     <div id="cartTable">
-        {{ include('order/cart_table.html.twig', {'cart': cart}) }}
+        {% include('order/cart_table.html.twig') %}
     </div>
 
     <div class="modal" id="confirmationModal" tabindex="-1" role="dialog">

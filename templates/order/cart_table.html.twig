@@ -1,35 +1,49 @@
-<table class="table table-striped">
-    <tr>
-        <th>Товар</th>
-        <th>Цена</th>
-        <th>Кол-во</th>
-        <th>Стоимость</th>
-        <th></th>
-    </tr>
-
-    {# @var item \App\Entity\OrderItem #}
-    {% for item in cart.items %}
+{% if cart.hasItems() %}
+    <table class="table table-striped">
         <tr>
-            <td>{{ item.product.title }}</td>
-            <td>{{ item.price }}</td>
-            <td class="cart-quantity">
-                <input type="number" value="{{ item.quantity }}"
-                       min="1" class="form-control js-cart-item-quantity"
-                       data-item-update-url="{{ path('order_update_cart_item_quantity', {'id': item.id, 'quantity': '--quantity--'}) }}">
-            </td>
-            <td>{{ item.amount }}</td>
-            <td>
-                <a href="{{ path('order_remove_from_cart', {'id': item.id}) }}"
-                   class="btn btn-danger js-remove-from-card"
-                   data-toggle="modal" data-target="#confirmationModal"
-                >Удалить</a>
-            </td>
+            <th>Товар</th>
+            <th>Цена</th>
+            <th>Кол-во</th>
+            <th>Стоимость</th>
+            <th></th>
         </tr>
-    {% endfor %}
 
-    <tr>
-        <th colspan="3">Всего</th>
-        <th>{{ cart.amount }}</th>
-        <th></th>
-    </tr>
-</table>
+        {# @var item \App\Entity\OrderItem #}
+        {% for item in cart.items %}
+            <tr>
+                <td>{{ item.product.title }}</td>
+                <td>{{ item.price }}</td>
+                <td class="cart-quantity">
+                    <input type="number" value="{{ item.quantity }}"
+                           min="1" class="form-control js-cart-item-quantity"
+                           data-item-update-url="{{ path('order_update_cart_item_quantity', {'id': item.id, 'quantity': '--quantity--'}) }}">
+                </td>
+                <td>{{ item.amount }}</td>
+                <td>
+                    <a href="{{ path('order_remove_from_cart', {'id': item.id}) }}"
+                       class="btn btn-danger js-remove-from-card"
+                       data-toggle="modal" data-target="#confirmationModal"
+                    >Удалить</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+        <tr>
+            <th colspan="3">Всего</th>
+            <th>{{ cart.amount }}</th>
+            <th></th>
+        </tr>
+    </table>
+
+    <h2>Оформление заказа</h2>
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_widget(form) }}
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Подтвердить заказ">
+        </div>
+    {{ form_end(form) }}
+{% else %}
+    <p>Ваша корзина пуста, добавьте <a href="{{ path('category') }}">товары</a></p>
+{% endif %}

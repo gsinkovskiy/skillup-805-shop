@@ -1,0 +1,55 @@
+{% block subject %}Новый заказ №{{ order.id }}{% endblock %}
+
+{% block body_text %}
+Новый заказ №{{ order.id }}
+------------------------------------
+
+Имя: {{ order.firstName }}
+Фамилия: {{ order.lastName }}
+Телефон: {{ order.phone }}
+Email: {{ order.email }}
+Комментарий: {{ order.comment }}
+
+------------------------------------
+{% for item in order.items %}
+* {{ item.product.title }} ({{ item.quantity }}шт) - {{ item.amount }}
+
+{% endfor %}
+
+------------------------------------
+Всего: {{ order.amount }}
+{% endblock %}
+
+{% block body_html %}
+    <h1>Новый заказ №{{ order.id }}</h1>
+
+    <p>Имя: {{ order.firstName }}</p>
+    <p>Фамилия: {{ order.lastName }}</p>
+    <p>Телефон: {{ order.phone }}</p>
+    <p>Email: {{ order.email }}</p>
+    <p>Комментарий: {{ order.comment }}</p>
+
+    <table>
+        <tr>
+            <th>Товар</th>
+            <th>Цена</th>
+            <th>Кол-во</th>
+            <th>Стоимость</th>
+        </tr>
+
+        {# @var item \App\Entity\OrderItem #}
+        {% for item in order.items %}
+            <tr>
+                <td>{{ item.product.title }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.amount }}</td>
+            </tr>
+        {% endfor %}
+
+        <tr>
+            <th colspan="3">Всего</th>
+            <th>{{ order.amount }}</th>
+        </tr>
+    </table>
+{% endblock %}
