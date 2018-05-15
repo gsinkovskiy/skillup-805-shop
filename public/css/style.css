@@ -42,3 +42,11 @@ main {
 .navbar .cart .badge {
     margin-left: -0.5em;
 }
+
+.table td {
+    vertical-align: middle;
+}
+
+.table td.cart-quantity input {
+    width: 90px;
+}

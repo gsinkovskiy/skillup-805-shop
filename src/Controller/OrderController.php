@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\OrderItem;
 use App\Entity\Product;
 use App\Service\Orders;
+use http\Exception\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -49,6 +51,36 @@ class OrderController extends Controller
     {
         return $this->render('order/header_cart.html.twig', [
             'cart' => $orders->getCart(),
+        ]);
+    }
+
+    /**
+     * @Route("/cart/delete/{id}", name="order_remove_from_cart")
+     */
+    public function removeFromCart(Orders $orders, OrderItem $item)
+    {
+        $cart = $orders->removeFromCart($item);
+
+        return $this->render('order/cart_table.html.twig', [
+            'cart' => $cart,
+        ]);
+    }
+
+    /**
+     * @Route("/cart/update/{id}/{quantity}", name="order_update_cart_item_quantity")
+     */
+    public function updateCartItemQuantity(Orders $orders, OrderItem $item, $quantity)
+    {
+        $quantity = (int)$quantity;
+
+        if ($quantity < 1) {
+            $quantity = $item->getQuantity();
+        }
+
+        $cart = $orders->updateCartItemQuantity($item, $quantity);
+
+        return $this->render('order/cart_table.html.twig', [
+            'cart' => $cart,
         ]);
     }
 

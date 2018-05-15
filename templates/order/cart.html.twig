@@ -3,27 +3,28 @@
 {% block body %}
     <h1>Корзина</h1>
 
-    <table class="table">
-        <tr>
-            <th>Товар</th>
-            <th>Цена</th>
-            <th>Кол-во</th>
-            <th>Стоимость</th>
-        </tr>
+    <div id="cartTable">
+        {{ include('order/cart_table.html.twig', {'cart': cart}) }}
+    </div>
 
-        {# @var item \App\Entity\OrderItem #}
-        {% for item in cart.items %}
-            <tr>
-                <td>{{ item.product.title }}</td>
-                <td>{{ item.price }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>{{ item.amount }}</td>
-            </tr>
-        {% endfor %}
-
-        <tr>
-            <th colspan="3">Всего</th>
-            <th>{{ cart.amount }}</th>
-        </tr>
-    </table>
+    <div class="modal" id="confirmationModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Подтверждение удаления</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Действительно удалить товар из корзины?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отменить</button>
+                    <button type="button" class="btn btn-danger"
+                            data-dismiss="modal" id="confirmedRemoveFromCartButton">Удалить</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
