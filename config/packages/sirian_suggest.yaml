@@ -1,0 +1,14 @@
+sirian_suggest:
+    form_options:
+        widget: select2_v3
+        attr:
+            placeholder: "Пошук..."
+
+    orm:
+        user:
+            class: App\Entity\User
+            property: username
+
+        product:
+            class: App\Entity\Product
+            property: title

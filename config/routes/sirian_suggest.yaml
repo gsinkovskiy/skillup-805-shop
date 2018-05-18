@@ -1,0 +1,3 @@
+_sirian_suggest:
+    resource: "@SirianSuggestBundle/Resources/config/routing.yml"
+    prefix:   /suggest

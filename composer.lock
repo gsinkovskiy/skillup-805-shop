@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a4e53a58b38a2a41faa64a88250c07c1",
-    "content-hash": "da6a5256f5caa8ffa9f7b2d8997673b3",
+    "hash": "d7856c82d6a0415733cb7eb49dfde3bb",
+    "content-hash": "cba69197673154570816bc91295a11f2",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2441,6 +2441,38 @@
                 "controllers"
             ],
             "time": "2018-02-14 08:40:54"
+        },
+        {
+            "name": "sirian/suggest-bundle",
+            "version": "v2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sirian/suggest-bundle.git",
+                "reference": "7d9d20dd878f381997642039dcae3c39d3690d9d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sirian/suggest-bundle/zipball/7d9d20dd878f381997642039dcae3c39d3690d9d",
+                "reference": "7d9d20dd878f381997642039dcae3c39d3690d9d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sirian\\SuggestBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "symfony2 suggest (autocomplete) bundle",
+            "time": "2018-02-18 08:17:18"
         },
         {
             "name": "sonata-project/admin-bundle",

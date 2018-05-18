@@ -146,6 +146,9 @@
             "ref": "aaddfdf43cdecd4cf91f992052d76c2cadc04543"
         }
     },
+    "sirian/suggest-bundle": {
+        "version": "v2.1.0"
+    },
     "sonata-project/admin-bundle": {
         "version": "3.31",
         "recipe": {
