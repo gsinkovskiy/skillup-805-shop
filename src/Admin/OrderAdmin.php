@@ -1,21 +1,32 @@
 <?php
 namespace App\Admin;
 
+use App\Entity\Order;
+use Doctrine\ORM\QueryBuilder;
 use Sirian\SuggestBundle\Form\Type\SuggestType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\CoreBundle\Form\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class OrderAdmin extends AbstractAdmin
 {
+    private $statusLabels = [
+        'В корзине' => Order::STATUS_DRAFT,
+        'Заказан' => Order::STATUS_ORDERED,
+        'Отправлен' => Order::STATUS_SENT,
+        'Закрыт' => Order::STATUS_DONE,
+    ];
 
     protected function configureFormFields(FormMapper $form)
     {
         $form
             ->add('createdAt')
-            ->add('status')
+            ->add('status', ChoiceType::class, [
+                'choices' => $this->statusLabels,
+            ])
             ->add('isPaid')
             ->add('amount', null, [
                 'attr' => [
@@ -24,6 +35,7 @@ class OrderAdmin extends AbstractAdmin
                 ],
             ])
             ->add('user', SuggestType::class, [
+                'required' => false,
                 'suggester' => 'user',
                 'attr' => [
                     'class' => 'form-control',
@@ -51,9 +63,15 @@ class OrderAdmin extends AbstractAdmin
         $list
             ->addIdentifier('id')
             ->addIdentifier('createdAt')
-            ->addIdentifier('status')
+            ->addIdentifier('status', 'choice', [
+                'choices' => array_flip($this->statusLabels),
+            ])
             ->add('isPaid')
             ->add('amount')
+            ->add('items', null, [
+//                'associated_property' => 'product',
+                'template' => 'admin/order/fields/items.html.twig',
+            ])
             ->add('user')
             ->add('email')
             ->add('phone')
@@ -64,7 +82,12 @@ class OrderAdmin extends AbstractAdmin
     {
         $filter
             ->add('createdAt')
-            ->add('status')
+            ->add('status', 'doctrine_orm_choice', [
+                'field_type' => ChoiceType::class,
+                'field_options' => [
+                    'choices' => $this->statusLabels,
+                ],
+            ])
             ->add('isPaid')
             ->add('amount')
             ->add('user')
@@ -74,6 +97,19 @@ class OrderAdmin extends AbstractAdmin
             ->add('firstName')
             ->add('lastName')
         ;
+    }
+
+    public function createQuery($context = 'list')
+    {
+        /** @var QueryBuilder $query */
+        $query = parent::createQuery($context);
+
+        list($rootAlias) = $query->getRootAliases();
+        $query->andWhere($rootAlias . '.amount > 0');
+        $query->leftJoin($rootAlias . '.items', 'i')->addSelect('i');
+        $query->leftJoin('i.product', 'p')->addSelect('p');
+
+        return $query;
     }
 
 }

@@ -1,0 +1,11 @@
+.content-wrapper {
+    /*background-color: #0151b6;*/
+}
+
+.ordered {
+    background-color: #ccffcc;
+}
+
+.table-striped>tbody>tr.ordered:nth-of-type(odd) {
+    background-color: #a3d1a3;
+}

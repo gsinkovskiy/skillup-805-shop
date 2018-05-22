@@ -18,6 +18,8 @@ services:
         arguments: [~, App\Entity\Order, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: admin.order.title }
+        calls:
+            - [setTemplate, ['outer_list_rows_list', 'admin/order/row.html.twig']]
         public: true
 
     admin.order_item:

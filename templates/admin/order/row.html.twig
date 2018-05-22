@@ -1,0 +1,14 @@
+{% for object in admin.datagrid.results %}
+    <tr
+            class="
+                {% if object.status == constant('App\\Entity\\Order::STATUS_DRAFT') %}draft{% endif %}
+                {% if object.status == constant('App\\Entity\\Order::STATUS_ORDERED') %}ordered{% endif %}
+                {% if object.status == constant('App\\Entity\\Order::STATUS_SENT') %}sent{% endif %}
+                {% if object.status == constant('App\\Entity\\Order::STATUS_DONE') %}done{% endif %}
+            "
+    >
+        {% include get_admin_template('inner_list_row', admin.code) %}
+    </tr>
+{% endfor %}
+
+

@@ -1,0 +1,8 @@
+{% extends '@SonataAdmin/CRUD/base_list_field.html.twig' %}
+
+{% block field %}
+    {% for item in object.items %}
+        <a href="{{ path('admin_app_product_edit', {'id': item.product.id}) }}" target="_blank">{{ item.product }}</a>
+        ({{ item.quantity }}){% if not loop.last %}, {% endif %}
+    {% endfor %}
+{% endblock %}
